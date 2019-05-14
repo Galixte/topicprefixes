@@ -30,6 +30,9 @@ class admin_controller_base extends \phpbb_test_case
 	/** @var \phpbb\topicprefixes\prefixes\manager|\PHPUnit_Framework_MockObject_MockObject */
 	protected $manager;
 
+	/** @var \phpbb\language\language */
+	protected $language;
+
 	/** @var \phpbb\log\log|\PHPUnit_Framework_MockObject_MockObject */
 	protected $log;
 
@@ -55,21 +58,32 @@ class admin_controller_base extends \phpbb_test_case
 			->disableOriginalConstructor()
 			->getMock();
 
+		$this->language = new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx));
+
 		$this->log = $this->getMockBuilder('\phpbb\log\log')
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->request = $this->getMock('\phpbb\request\request');
-		$this->template = $this->getMock('\phpbb\template\template');
-		$this->user = $this->getMock('\phpbb\user', array(), array(
-			new \phpbb\language\language(new \phpbb\language\language_file_loader($phpbb_root_path, $phpEx)),
-			'\phpbb\datetime'
-		));
+		$this->request = $this->getMockBuilder('\phpbb\request\request')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->template = $this->getMockBuilder('\phpbb\template\template')
+			->disableOriginalConstructor()
+			->getMock();
+
+		$this->user = $this->getMockBuilder('\phpbb\user')
+			->setConstructorArgs(array(
+				$this->language,
+				'\phpbb\datetime'
+			))
+			->getMock();
 
 		$this->controller = $this->getMockBuilder('\phpbb\topicprefixes\controller\admin_controller')
 			->setMethods(array('get_forum_info', 'log'))
 			->setConstructorArgs(array(
 				$this->manager,
+				$this->language,
 				$this->log,
 				$this->request,
 				$this->template,
