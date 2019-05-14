@@ -45,6 +45,7 @@ $lang = array_merge($lang, array(
 	'TOPIC_PREFIX_TAG'			=> 'Libellé du préfixe',
 	'TOPIC_PREFIX_ENABLED'		=> 'État du préfixe',
 	'TOPIC_PREFIXES_EMPTY'		=> 'Il n’y a aucun préfixe pour ce forum.',
+	'TOPIC_PREFIX_PLACEHOLDER'	=> '[Mon préfixe]',
 
 	'CREATE_TOPIC_PREFIX'			=> 'Créer un nouveau préfixe de sujet',
 	'DELETE_TOPIC_PREFIX_CONFIRM'	=> 'Suppression de ce préfixe de sujet.',
